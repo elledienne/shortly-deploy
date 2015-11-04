@@ -3,6 +3,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      'public/thewholefuckingthing.conact.js': ['!public/dist', 'public/lib/jquery.js','public/lib/underscore.js','public/lib/handlebars.js','public/lib/backbone.js','public/client/*.js']
     },
 
     mochaTest: {
@@ -13,7 +14,6 @@ module.exports = function(grunt) {
         src: ['test/**/*.js']
       }
     },
-
     nodemon: {
       dev: {
         script: 'server.js'
@@ -21,11 +21,19 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      my_target: {
+        files: {
+          'public/dist/thewholefuckingthing.min.js': 'public/thewholefuckingthing.conact.js'
+        }
+      }
     },
 
     jshint: {
       files: [
-        // Add filespec list here
+      'server.js',
+      'server-config.js',
+      'app/*.js',
+      'app/**/*.js'
       ],
       options: {
         force: 'true',
@@ -36,9 +44,16 @@ module.exports = function(grunt) {
         ]
       }
     },
-
     cssmin: {
-        // Add filespec list here
+      target: {
+        files: [{
+          expand: true,
+          cwd: 'public',
+          src: ['*.css', '!*.min.css'],
+          dest: 'public/dist',
+          ext: '.min.css'
+        }]
+      }
     },
 
     watch: {
@@ -94,7 +109,19 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
+  grunt.registerTask('devbuild', [
+    'jshint',
+    'test',
+    'concat',
+    'uglify',
+    'cssmin',
+    'server-dev'
+    //somthing
+  ]);
+  
   grunt.registerTask('build', [
+
+    //somthing
   ]);
 
   grunt.registerTask('upload', function(n) {
