@@ -21,17 +21,41 @@ var Promise = require('bluebird');
 //     });
 //   }
 // });
+console.log(db)
 
-var userSchema = {
 
-  username: String,
-  id:Number,
-  password:String
+var userSchema = db.Schema();
 
+userSchema.add({
+  salt:'string',
+  username: 'string',
+  id:'number',
+  password_hash:'string'
+});
+
+var User = db.model('User',userSchema);
+
+
+userSchema.pre('save',function(next){
+  var self = this;
+  bcrypt.genSalt(10, function(err, salt) {
+    if(err) throw err;
+    self.salt = salt;
+    bcrypt.hash(self.password, salt, null,function(err, hash) {
+      if(err)throw err;
+      self.password_hash = hash;
+    });
+  });
+  next();
+})
+
+userSchema.static.comparePassword = function(attemptedPassword, callback) {
+  bcrypt.compare(attemptedPassword, this.password, function(err, isMatch) {
+    callback(isMatch);
+  });
 }
 
 
-var User = db.model('User',userSchema)
 
 
 module.exports = User;

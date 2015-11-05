@@ -124,7 +124,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('devbuild', [
     'jshint',
-    // 'test',
+    'test',
     'concat',
     'uglify',
     'cssmin',
