@@ -3,7 +3,19 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
-      'public/thewholefuckingthing.conact.js': ['!public/dist', 'public/lib/jquery.js','public/lib/underscore.js','public/lib/handlebars.js','public/lib/backbone.js','public/client/*.js']
+      'public/theWholeLib.js': [  'public/lib/underscore.js',
+                                  'public/lib/jquery.js',
+                                  'public/lib/backbone.js',
+                                  'public/lib/handlebars.js'
+                                ],
+      'public/theWholeClient.js':['public/client/app.js',
+                                  'public/client/router.js',
+                                  'public/client/link.js',
+                                  'public/client/links.js',
+                                  'public/client/linkView.js',
+                                  'public/client/linksView.js',
+                                  'public/client/createLinkView.js'
+                                  ]
     },
 
     mochaTest: {
@@ -23,7 +35,8 @@ module.exports = function(grunt) {
     uglify: {
       my_target: {
         files: {
-          'public/dist/thewholefuckingthing.min.js': 'public/thewholefuckingthing.conact.js'
+          'public/dist/theWholeLib.min.js': 'public/theWholeLib.js',
+          'public/dist/theWholeClient.min.js': 'public/theWholeClient.js',
         }
       }
     },
@@ -111,12 +124,11 @@ module.exports = function(grunt) {
 
   grunt.registerTask('devbuild', [
     'jshint',
-    'test',
+    // 'test',
     'concat',
     'uglify',
     'cssmin',
     'server-dev'
-    //somthing
   ]);
   
   grunt.registerTask('build', [
