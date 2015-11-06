@@ -4,6 +4,4 @@ var port = process.env.PORT || 8080;
 
 app.listen(port);
 
-console.log('Server now listening on port ' + port);
-
-// process.env.NODE_ENV = 'development';
+console.log('Server now listening on port ' + port)

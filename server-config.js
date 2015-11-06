@@ -17,6 +17,7 @@ app.configure(function() {
 
 app.get('/visit/:id', handler.navToLink);
 // app.get('/*', handler.navToLink);
+
 app.get('/', util.checkUser, handler.renderIndex);
 app.get('/create', util.checkUser, handler.renderIndex);
 
@@ -29,6 +30,5 @@ app.get('/logout', handler.logoutUser);
 
 app.get('/signup', handler.signupUserForm);
 app.post('/signup', handler.signupUser);
-
 
 module.exports = app;
