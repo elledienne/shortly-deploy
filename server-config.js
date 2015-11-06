@@ -15,6 +15,8 @@ app.configure(function() {
   app.use(express.session());
 });
 
+app.get('/visit/:id', handler.navToLink);
+// app.get('/*', handler.navToLink);
 app.get('/', util.checkUser, handler.renderIndex);
 app.get('/create', util.checkUser, handler.renderIndex);
 
@@ -28,6 +30,5 @@ app.get('/logout', handler.logoutUser);
 app.get('/signup', handler.signupUserForm);
 app.post('/signup', handler.signupUser);
 
-// app.get('/*', handler.navToLink);
 
 module.exports = app;
