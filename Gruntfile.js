@@ -3,21 +3,21 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
-      'public/theWholeLib.js': [  'public/lib/underscore.js',
-                                  'public/lib/jquery.js',
-                                  'public/lib/backbone.js',
-                                  'public/lib/handlebars.js'
-                                ],
+      'public/theWholeLib.js': [
+        'public/lib/underscore.js',
+        'public/lib/jquery.js',
+        'public/lib/backbone.js',
+        'public/lib/handlebars.js'
+      ],
       'public/theWholeClient.js':['public/client/app.js',
-                                  'public/client/router.js',
-                                  'public/client/link.js',
-                                  'public/client/links.js',
-                                  'public/client/linkView.js',
-                                  'public/client/linksView.js',
-                                  'public/client/createLinkView.js'
-                                  ]
+        'public/client/router.js',
+        'public/client/link.js',
+        'public/client/links.js',
+        'public/client/linkView.js',
+        'public/client/linksView.js',
+        'public/client/createLinkView.js'
+      ]
     },
-
     mochaTest: {
       test: {
         options: {
@@ -86,10 +86,31 @@ module.exports = function(grunt) {
       }
     },
 
-    shell: {
-      prodServer: {
+    // shell: {
+    //   prodServer: {
+        
+    //   }
+    // },
+
+    gitadd: {
+      task: {
+        options: {
+          verbose: true,
+          all: true
+        }
       }
     },
+    gitcommit: {
+      task: {
+        options: {
+          message: grunt.option('message')
+        },
+        // files: {
+        //     src: ['test.txt']
+        // }
+      }
+    },
+
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -99,6 +120,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-git');
   grunt.loadNpmTasks('grunt-nodemon');
 
   grunt.registerTask('server-dev', function (target) {
@@ -122,18 +144,27 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  grunt.registerTask('devbuild', [
+  // grunt.registerTask('devbuild', [
+  //   'jshint',
+  //   'test',
+  //   'concat',
+  //   'uglify',
+  //   'cssmin',
+  //   'server-dev'
+  // ]);
+  
+  grunt.registerTask('git', [
+    'gitadd',
+    'gitcommit'
+  ]);
+
+  grunt.registerTask('build', [
     'jshint',
     'test',
     'concat',
     'uglify',
     'cssmin',
-    'server-dev'
-  ]);
-  
-  grunt.registerTask('build', [
-
-    //somthing
+    'upload'
   ]);
 
   grunt.registerTask('upload', function(n) {
