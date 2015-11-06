@@ -177,6 +177,15 @@ module.exports = function(grunt) {
     'upload'
   ]);
 
+  grunt.registerTask('dist', [
+    //'jshint',
+    //'test',
+    'concat',
+    'uglify',
+    'cssmin',
+    //'upload'
+  ]);
+
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       grunt.task.run([ 'git' ]);
@@ -187,7 +196,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('deploy', [
+  grunt.registerTask('deployy', [
     'build'
   ]);
 
