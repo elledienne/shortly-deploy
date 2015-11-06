@@ -19,9 +19,10 @@ userSchema.pre('save',function(next){
       if(err)throw err;
       self.password_hash = hash;
       console.log(self.password_hash);
+      next();
     });
   });
-  next();
+  
 })
 
 userSchema.methods.comparePassword = function(attemptedPassword, callback) {
