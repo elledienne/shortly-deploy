@@ -108,6 +108,7 @@ module.exports = function(grunt) {
     gitpush: {
       task: {
         options: {
+          verbose: true,
           remote: 'azure'
         }
       }
