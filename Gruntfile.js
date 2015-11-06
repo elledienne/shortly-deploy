@@ -86,12 +86,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // shell: {
-    //   prodServer: {
-        
-    //   }
-    // },
-
     gitadd: {
       task: {
         options: {
@@ -104,12 +98,16 @@ module.exports = function(grunt) {
       task: {
         options: {
           message: grunt.option('message')
-        },
-        // files: {
-        //     src: ['test.txt']
-        // }
+        }
       }
     },
+    gitpush: {
+      task: {
+        options: {
+          remote: 'azure'
+        }
+      }
+    }
 
   });
 
@@ -155,7 +153,8 @@ module.exports = function(grunt) {
   
   grunt.registerTask('git', [
     'gitadd',
-    'gitcommit'
+    'gitcommit',
+    'gitpush'
   ]);
 
   grunt.registerTask('build', [
@@ -169,14 +168,15 @@ module.exports = function(grunt) {
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
-      // add your production server task here
+      grunt.task.run([ 'git' ]);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
+  //var commitMessage = grunt.option('message') || 'Automatic commit';
   grunt.registerTask('deploy', [
-      // add your production server task here
+    'build'
   ]);
 
 
