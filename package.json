@@ -10,6 +10,7 @@
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "1.0.8",
     "bookshelf": "~0.6.4",
+    "bson": "^0.4.19",
     "chai": "^1.9.0",
     "ejs": "~0.8.5",
     "express": "~3.4.8",
