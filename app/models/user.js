@@ -12,13 +12,11 @@ userSchema.add({
 userSchema.pre('save',function(next){
   var self = this;
   bcrypt.genSalt(10, function(err, salt) {
-    console.log('inside genSalt');
     if(err) throw err;
     self.salt = salt;
     bcrypt.hash(self.password_hash, salt, null,function(err, hash) {
       if(err)throw err;
       self.password_hash = hash;
-      console.log(self.password_hash);
       next();
     });
   });
