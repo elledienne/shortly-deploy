@@ -168,16 +168,16 @@ module.exports = function(grunt) {
     'gitpush'
   ]);
 
-  grunt.registerTask('build', [
+  grunt.registerTask('build-dev', [
     'jshint',
     'test',
-    'concat',
-    'uglify',
-    'cssmin',
+    //'concat',
+    //'uglify',
+    //'cssmin',
     'upload'
   ]);
 
-  grunt.registerTask('dist', [
+  grunt.registerTask('build', [
     //'jshint',
     //'test',
     'concat',
@@ -196,8 +196,8 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('deployy', [
-    'build'
+  grunt.registerTask('deploy', [
+    'build-dev'
   ]);
 
 
