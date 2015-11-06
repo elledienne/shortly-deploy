@@ -31,7 +31,11 @@ module.exports = function(grunt) {
         script: 'server.js'
       }
     },
-
+    shell: {
+      mongo: {
+        command: 'mongod'
+      }
+    },
     uglify: {
       my_target: {
         files: {
@@ -130,8 +134,23 @@ module.exports = function(grunt) {
     });
     nodemon.stdout.pipe(process.stdout);
     nodemon.stderr.pipe(process.stderr);
-
+  
     grunt.task.run([ 'watch' ]);
+  });
+
+  grunt.registerTask('mongo-dev', function (target) {
+    // Running mongodb in a different process and displaying output on the main console
+    var mongodb = grunt.util.spawn({
+         cmd: 'grunt',
+         grunt: true,
+         args: 'shell:mongo'
+    });
+    mongodb.stdout.pipe(process.stdout);
+    mongodb.stderr.pipe(process.stderr);
+
+    grunt.task.run([
+      'server-dev'
+    ]);
   });
 
   ////////////////////////////////////////////////////
@@ -142,15 +161,6 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  // grunt.registerTask('devbuild', [
-  //   'jshint',
-  //   'test',
-  //   'concat',
-  //   'uglify',
-  //   'cssmin',
-  //   'server-dev'
-  // ]);
-  
   grunt.registerTask('git', [
     'gitadd',
     'gitcommit',
@@ -170,11 +180,12 @@ module.exports = function(grunt) {
     if(grunt.option('prod')) {
       grunt.task.run([ 'git' ]);
     } else {
-      grunt.task.run([ 'server-dev' ]);
+      grunt.task.run([ 
+        'mongo-dev',
+      ]);
     }
   });
 
-  //var commitMessage = grunt.option('message') || 'Automatic commit';
   grunt.registerTask('deploy', [
     'build'
   ]);
